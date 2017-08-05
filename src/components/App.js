@@ -12,27 +12,23 @@ export class App extends Component{
         		[
         			{
         				venue: "Madision Square Garden",
-        				date: new Date("1/2/2016"),
+        				date: "2016-01-02",
         				soldout: true,
         				vip: false
-        			},
-        			{
-        				venue: "Jones Beach Theater",
-        				date: new Date("3/28/2016"),
-        				soldout: false,
-        				vip: false
-        			},
-        			{
-        				venue: "Nassau Coliseum",
-        				date: new Date("4/2/2016"),
-        				soldout: false,
-        				vip: true
         			}
         		]
       };
       //console.log(this.props.params);
+      this.addConcert = this.addConcert.bind(this)
   }
-
+  addConcert(newConcert){
+    this.setState({
+      allConcertDays:[
+        ...this.state.allConcertDays,
+        newConcert
+      ]
+    })
+  }
   countDays(filter){
     return this.state.allConcertDays.filter(function(day){
       if(filter){
@@ -57,7 +53,7 @@ export class App extends Component{
                        soldout={this.countDays('countDays')}
                       vip={this.countDays('vip')}
                       /> :
-      (this.props.location.pathname === "/add-concert") ? <AddConcertForm /> :
+      (this.props.location.pathname === "/add-concert") ? <AddConcertForm onNewConcert = {this.addConcert} /> :
       <ConcertDayList days = {this.state.allConcertDays} filter={this.props.params.filter}/>
       }
       </div>
